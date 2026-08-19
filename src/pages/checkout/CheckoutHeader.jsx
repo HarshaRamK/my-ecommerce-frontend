@@ -1,5 +1,9 @@
 import { Link } from "react-router";
 
+// 1. Import images stored inside src/assets/images/
+import logoImage from "../../assets/images/logo.png";
+import mobileLogoImage from "../../assets/images/mobile-logo.png";
+
 export function CheckoutHeader({ cart = [] }) {
   const itemCount = cart.reduce((sum, cartItem) => sum + (cartItem.quantity || 0), 0);
 
@@ -8,14 +12,15 @@ export function CheckoutHeader({ cart = [] }) {
       <div className="header-content">
         <div className="checkout-header-left-section">
           <Link to="/">
+            {/* 2. Use the imported variable for src/assets files */}
             <img 
               className="logo" 
-              src="/images/logo.png" 
+              src={logoImage} 
               alt="Logo" 
             />
             <img 
               className="mobile-logo" 
-              src="/images/mobile-logo.png" 
+              src={mobileLogoImage} 
               alt="Logo" 
             />
           </Link>
@@ -30,6 +35,7 @@ export function CheckoutHeader({ cart = [] }) {
         </div>
 
         <div className="checkout-header-right-section">
+          {/* 3. Use plain URL string for the lock icon stored in public/images/icons/ */}
           <img 
             src="/images/icons/checkout-lock-icon.png" 
             alt="Checkout Lock" 
