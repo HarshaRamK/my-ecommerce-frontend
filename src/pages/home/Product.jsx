@@ -2,9 +2,6 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { formatMoney } from "../../utils/money";
 
-// Import checkmark icon from src/assets
-import checkmarkIcon from "../../assets/images/icons/checkmark.png";
-
 const BACKEND_URL = "https://my-ecommerce-backend-ajxk.onrender.com";
 
 export function Product({ product = {}, loadcart }) {
@@ -39,12 +36,21 @@ export function Product({ product = {}, loadcart }) {
     setQuantity(Number(event.target.value));
   };
 
+  // Safe image path formatter ensuring leading slash for public assets
+  const getImagePath = (path) => {
+    if (!path) return "";
+    if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/")) {
+      return path;
+    }
+    return `/${path}`;
+  };
+
   return (
     <div className="product-container">
       <div className="product-image-container">
         <img 
           className="product-image" 
-          src={product.image} 
+          src={getImagePath(product.image)} 
           alt={product.name || "Product image"} 
         />
       </div>
@@ -56,7 +62,7 @@ export function Product({ product = {}, loadcart }) {
           <>
             <img
               className="product-rating-stars"
-              src={`/images/ratings/rating-${product.rating.stars * 10}.png`}
+              src={`/images/ratings/rating-${Math.round(product.rating.stars * 10)}.png`}
               alt={`${product.rating.stars} stars`}
             />
             <div className="product-rating-count link-primary">
@@ -79,8 +85,7 @@ export function Product({ product = {}, loadcart }) {
       <div className="product-spacer"></div>
 
       <div className="added-to-cart" style={{ opacity: isAdded ? 1 : 0 }}>
-        {/* Use imported checkmark icon */}
-        <img src={checkmarkIcon} alt="Checkmark" />
+        <img src="/images/icons/checkmark.png" alt="Checkmark" />
         Added
       </div>
 
