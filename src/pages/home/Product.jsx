@@ -2,7 +2,9 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { formatMoney } from "../../utils/money";
 
-// Prepend your live Render backend URL
+// Import checkmark icon from src/assets
+import checkmarkIcon from "../../assets/images/icons/checkmark.png";
+
 const BACKEND_URL = "https://my-ecommerce-backend-ajxk.onrender.com";
 
 export function Product({ product = {}, loadcart }) {
@@ -34,17 +36,7 @@ export function Product({ product = {}, loadcart }) {
   };
 
   const selectQuantity = (event) => {
-    const quantitySelected = Number(event.target.value);
-    setQuantity(quantitySelected);
-  };
-
-  // Helper to format image paths with leading slashes
-  const formatImagePath = (path) => {
-    if (!path) return "";
-    if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/")) {
-      return path;
-    }
-    return `/${path}`;
+    setQuantity(Number(event.target.value));
   };
 
   return (
@@ -52,7 +44,7 @@ export function Product({ product = {}, loadcart }) {
       <div className="product-image-container">
         <img 
           className="product-image" 
-          src={formatImagePath(product.image)} 
+          src={product.image} 
           alt={product.name || "Product image"} 
         />
       </div>
@@ -64,7 +56,7 @@ export function Product({ product = {}, loadcart }) {
           <>
             <img
               className="product-rating-stars"
-              src={formatImagePath(`images/ratings/rating-${product.rating.stars * 10}.png`)}
+              src={`/images/ratings/rating-${product.rating.stars * 10}.png`}
               alt={`${product.rating.stars} stars`}
             />
             <div className="product-rating-count link-primary">
@@ -78,23 +70,17 @@ export function Product({ product = {}, loadcart }) {
 
       <div className="product-quantity-container">
         <select value={quantity} onChange={selectQuantity}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+            <option key={num} value={num}>{num}</option>
+          ))}
         </select>
       </div>
 
       <div className="product-spacer"></div>
 
       <div className="added-to-cart" style={{ opacity: isAdded ? 1 : 0 }}>
-        <img src="/images/icons/checkmark.png" alt="Checkmark" />
+        {/* Use imported checkmark icon */}
+        <img src={checkmarkIcon} alt="Checkmark" />
         Added
       </div>
 

@@ -4,12 +4,13 @@ import { Link } from "react-router";
 import { formatMoney } from "../../utils/money";
 import dayjs from "dayjs";
 
+// Import images directly from src/assets
+import buyAgainIcon from "../../assets/images/icons/buy-again.png";
+
 const BACKEND_URL = "https://my-ecommerce-backend-ajxk.onrender.com";
 
 export function OrdersGrid({ orders = [], loadcart }) {
   const [addedProductIds, setAddedProductIds] = useState([]);
-
-  // Safety check: ensure orders is always an array
   const safeOrders = Array.isArray(orders) ? orders : [];
 
   const buyAgain = async (productId) => {
@@ -31,7 +32,6 @@ export function OrdersGrid({ orders = [], loadcart }) {
   return (
     <div className="orders-grid">
       {safeOrders.map((order) => {
-        // Safety check: ensure order.products is always an array
         const safeProducts = Array.isArray(order?.products) ? order.products : [];
 
         return (
@@ -81,9 +81,10 @@ export function OrdersGrid({ orders = [], loadcart }) {
                         className="buy-again-button button-primary"
                         onClick={() => buyAgain(orderProduct.productId)}
                       >
+                        {/* Use imported icon variable here */}
                         <img
                           className="buy-again-icon"
-                          src="images/icons/buy-again.png"
+                          src={buyAgainIcon}
                           alt="Buy again"
                         />
                         <span className="buy-again-message">
