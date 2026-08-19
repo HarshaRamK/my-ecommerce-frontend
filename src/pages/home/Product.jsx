@@ -5,23 +5,22 @@ import { formatMoney } from "../../utils/money";
 // Prepend your live Render backend URL
 const BACKEND_URL = "https://my-ecommerce-backend-ajxk.onrender.com";
 
-export function Product({ product, loadcart }) {
+export function Product({ product = {}, loadcart }) {
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
   const addedTimeoutRef = useRef(null);
 
   const addToCart = async () => {
     try {
-      // 1. Point request to your live backend endpoint
       await axios.post(`${BACKEND_URL}/api/cart-items`, {
         productId: product.id,
         quantity,
       });
 
-      // 2. Reload the cart state
-      await loadcart();
+      if (typeof loadcart === "function") {
+        await loadcart();
+      }
 
-      // 3. Trigger "Added" checkmark animation
       setIsAdded(true);
       if (addedTimeoutRef.current) {
         clearTimeout(addedTimeoutRef.current);
@@ -39,10 +38,23 @@ export function Product({ product, loadcart }) {
     setQuantity(quantitySelected);
   };
 
+  // Helper to format image paths with leading slashes if necessary
+  const formatImagePath = (path) => {
+    if (!path) return "";
+    if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/")) {
+      return path;
+    }
+    return `/${path}`;
+  };
+
   return (
     <div className="product-container">
       <div className="product-image-container">
-        <img className="product-image" src={product.image} alt={product.name} />
+        <img 
+          className="product-image" 
+          src={formatImagePath(product.image)} 
+          alt={product.name || "Product image"} 
+        />
       </div>
 
       <div className="product-name limit-text-to-2-lines">{product.name}</div>
@@ -52,7 +64,7 @@ export function Product({ product, loadcart }) {
           <>
             <img
               className="product-rating-stars"
-              src={`images/ratings/rating-${product.rating.stars * 10}.png`}
+              src={formatImagePath(`images/ratings/rating-${product.rating.stars * 10}.png`)}
               alt={`${product.rating.stars} stars`}
             />
             <div className="product-rating-count link-primary">
@@ -62,7 +74,7 @@ export function Product({ product, loadcart }) {
         )}
       </div>
 
-      <div className="product-price">{formatMoney(product.priceCents)}</div>
+      <div className="product-price">{formatMoney(product.priceCents || 0)}</div>
 
       <div className="product-quantity-container">
         <select value={quantity} onChange={selectQuantity}>
@@ -82,7 +94,7 @@ export function Product({ product, loadcart }) {
       <div className="product-spacer"></div>
 
       <div className="added-to-cart" style={{ opacity: isAdded ? 1 : 0 }}>
-        <img src="images/icons/checkmark.png" alt="Checkmark" />
+        <img src="/images/icons/checkmark.png" alt="Checkmark" />
         Added
       </div>
 
@@ -95,7 +107,6 @@ export function Product({ product, loadcart }) {
     </div>
   );
 }
-
 // import axios from "axios";
 // import { useRef, useState } from "react";
 // import { formatMoney } from "../../utils/money";
