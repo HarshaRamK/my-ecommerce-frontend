@@ -38,7 +38,7 @@ export function Product({ product = {}, loadcart }) {
     setQuantity(quantitySelected);
   };
 
-  // Helper to format image paths with leading slashes if necessary
+  // Helper to format image paths with leading slashes
   const formatImagePath = (path) => {
     if (!path) return "";
     if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/")) {
@@ -107,6 +107,7 @@ export function Product({ product = {}, loadcart }) {
     </div>
   );
 }
+
 // import axios from "axios";
 // import { useRef, useState } from "react";
 // import { formatMoney } from "../../utils/money";
