@@ -4,11 +4,13 @@ import { Link } from "react-router";
 import { formatMoney } from "../../utils/money";
 import dayjs from "dayjs";
 
-// Prepend your live Render backend URL
 const BACKEND_URL = "https://my-ecommerce-backend-ajxk.onrender.com";
 
 export function OrdersGrid({ orders = [], loadcart }) {
   const [addedProductIds, setAddedProductIds] = useState([]);
+
+  // Safety check: ensure orders is always an array
+  const safeOrders = Array.isArray(orders) ? orders : [];
 
   const buyAgain = async (productId) => {
     try {
@@ -28,7 +30,10 @@ export function OrdersGrid({ orders = [], loadcart }) {
 
   return (
     <div className="orders-grid">
-      {Array.isArray(orders) && orders.map((order) => {
+      {safeOrders.map((order) => {
+        // Safety check: ensure order.products is always an array
+        const safeProducts = Array.isArray(order?.products) ? order.products : [];
+
         return (
           <div key={order.id} className="order-container">
             <div className="order-header">
@@ -50,7 +55,7 @@ export function OrdersGrid({ orders = [], loadcart }) {
             </div>
 
             <div className="order-details-grid">
-              {Array.isArray(order.products) && order.products.map((orderProduct) => {
+              {safeProducts.map((orderProduct) => {
                 const isAdded = addedProductIds.includes(orderProduct.productId);
                 return (
                   <Fragment key={`${order.id}-${orderProduct.productId}`}>

@@ -15,9 +15,16 @@ export function OrdersPage({ cart, loadcart }) {
     const fetchOrderData = async () => {
       try {
         const response = await axios.get(`${BACKEND_URL}/api/orders?expand=products`);
+        
+        // Handle direct array or wrapped object responses
         if (Array.isArray(response.data)) {
           setOrders(response.data);
+        } else if (response.data && Array.isArray(response.data.orders)) {
+          setOrders(response.data.orders);
+        } else if (response.data && Array.isArray(response.data.data)) {
+          setOrders(response.data.data);
         } else {
+          console.error("API did not return an array:", response.data);
           setOrders([]);
         }
       } catch (error) {
