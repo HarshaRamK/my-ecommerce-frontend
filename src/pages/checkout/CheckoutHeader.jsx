@@ -8,7 +8,6 @@ export function CheckoutHeader({ cart = [] }) {
       <div className="header-content">
         <div className="checkout-header-left-section">
           <Link to="/">
-            {/* Absolute root paths pointing directly to public/images */}
             <img 
               className="logo" 
               src="/images/logo.png" 
@@ -31,7 +30,6 @@ export function CheckoutHeader({ cart = [] }) {
         </div>
 
         <div className="checkout-header-right-section">
-          {/* Note the leading slash / before images/icons/ */}
           <img 
             src="/images/icons/checkout-lock-icon.png" 
             alt="Checkout Lock" 
