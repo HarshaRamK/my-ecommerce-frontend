@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { formatMoney } from "../../utils/money";
 import dayjs from "dayjs";
 
-// Import images directly from src/assets
+// 1. Import the icon directly from src/assets
 import buyAgainIcon from "../../assets/images/icons/buy-again.png";
 
 const BACKEND_URL = "https://my-ecommerce-backend-ajxk.onrender.com";
@@ -81,7 +81,7 @@ export function OrdersGrid({ orders = [], loadcart }) {
                         className="buy-again-button button-primary"
                         onClick={() => buyAgain(orderProduct.productId)}
                       >
-                        {/* Use imported icon variable here */}
+                        {/* 2. Pass the imported buyAgainIcon variable into src */}
                         <img
                           className="buy-again-icon"
                           src={buyAgainIcon}
