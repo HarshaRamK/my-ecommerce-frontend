@@ -1,9 +1,5 @@
 import { Link } from "react-router";
 
-// Import images directly from src/assets
-import logoImage from "../../assets/images/logo.png";
-import mobileLogoImage from "../../assets/images/mobile-logo.png";
-import checkoutLockIcon from "../../assets/images/icons/checkout-lock-icon.png";
 
 export function CheckoutHeader({ cart = [] }) {
   const itemCount = cart.reduce((sum, cartItem) => sum + cartItem.quantity, 0);
@@ -14,8 +10,9 @@ export function CheckoutHeader({ cart = [] }) {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <Link to="/">
-              <img className="logo" src={logoImage} alt="Logo" />
-              <img className="mobile-logo" src={mobileLogoImage} alt="Logo" />
+              {/* Add leading slashes / to reference files in public folder */}
+              <img className="logo" src="/images/logo.png" alt="Logo" />
+              <img className="mobile-logo" src="/images/mobile-logo.png" alt="Logo" />
             </Link>
           </div>
 
@@ -28,7 +25,8 @@ export function CheckoutHeader({ cart = [] }) {
           </div>
 
           <div className="checkout-header-right-section">
-            <img src={checkoutLockIcon} alt="Checkout Lock" />
+            {/* Leading slash ensures it works on /checkout nested route */}
+            <img src="/images/icons/checkout-lock-icon.png" alt="Checkout Lock" />
           </div>
         </div>
       </div>
