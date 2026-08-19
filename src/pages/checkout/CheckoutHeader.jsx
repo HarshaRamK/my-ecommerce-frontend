@@ -8,14 +8,15 @@ export function CheckoutHeader({ cart = [] }) {
       <div className="header-content">
         <div className="checkout-header-left-section">
           <Link to="/">
+            {/* Absolute root paths pointing directly to public/images */}
             <img 
               className="logo" 
-              src={`${import.meta.env.BASE_URL}images/logo.png`} 
+              src="/images/logo.png" 
               alt="Logo" 
             />
             <img 
               className="mobile-logo" 
-              src={`${import.meta.env.BASE_URL}images/mobile-logo.png`} 
+              src="/images/mobile-logo.png" 
               alt="Logo" 
             />
           </Link>
@@ -30,10 +31,10 @@ export function CheckoutHeader({ cart = [] }) {
         </div>
 
         <div className="checkout-header-right-section">
+          {/* Note the leading slash / before images/icons/ */}
           <img 
-            src={`${import.meta.env.BASE_URL}images/icons/checkout-lock-icon.png`} 
+            src="/images/icons/checkout-lock-icon.png" 
             alt="Checkout Lock" 
-            style={{ width: "18px", height: "auto" }}
           />
         </div>
       </div>
